@@ -1,82 +1,96 @@
-# 🔧 Automated Remote Job Scraper with n8n, Telegram & Google Sheets
 
-This project is a fully automated job aggregator built using [n8n](https://n8n.io/), designed to collect remote job postings from multiple APIs, filter and normalize the data, remove duplicates, and send them directly to Telegram while logging them to Google Sheets.
+# 🛠️ Remote Job Scraper & Telegram Notifier (n8n Workflow)
+
+This project is an automated workflow built with [n8n](https://n8n.io) that:
+
+1. Fetches remote job offers from multiple free public APIs
+2. Filters out irrelevant or duplicate listings
+3. Sends the new jobs directly to a Telegram channel or bot
+4. Logs every unique job link into a Google Sheet to prevent duplication
 
 ---
 
-## 🚀 Features
+## 📌 Features
 
-- 🔁 **Automated Scheduling** with Cron
-- 🌍 **API Integration** with:
+- 🔄 Automated job fetching on a schedule (cron)
+- 🌐 Integrated with 4 job APIs:
   - Remotive
   - RemoteOK
   - Arbeitnow
   - Adzuna
-- 🧠 **Normalization & Filtering** based on keywords like `developer`, `engineer`, `frontend`, `backend`, etc.
-- 🧹 **Duplicate Removal** via comparison with Google Sheets URLs
-- 💬 **Instant Telegram Notifications**
-- 📊 **Google Sheets Logging** of all unique job entries
+- 🎯 Filters jobs by keywords (`developer`, `engineer`, `fullstack`, etc.)
+- 📤 Sends jobs to Telegram in a structured format
+- 🧾 Tracks already sent jobs in Google Sheets
+- 💬 Clean message formatting with emojis
+- 🛑 Duplicate-proof — jobs are not re-sent if they already exist in the sheet
 
 ---
 
-## 🧰 Technologies Used
+## 🔧 Requirements
 
-- **n8n** for workflow automation
-- **JavaScript** code nodes for custom logic
-- **Google Sheets API** for reading/writing job data
-- **Telegram Bot API** for sending formatted job alerts
-- **REST APIs** with HTTP Requests
-
----
-
-## 📌 Workflow Overview
-
-1. **Cron Trigger** starts the process.
-2. Each job board API is queried (`Remotive`, `RemoteOK`, `Arbeitnow`, `Adzuna`).
-3. Jobs are **filtered** by keywords and **normalized** into a unified format.
-4. All jobs are **merged**.
-5. Google Sheet is checked for **existing URLs**.
-6. New jobs are sent to **Telegram** and **logged** in Google Sheets.
+- [n8n](https://n8n.io) installed locally or hosted
+- A Telegram bot + chat ID
+- A Google Sheet with at least one column named `url`
+- API keys for:
+  - [Adzuna](https://developer.adzuna.com/) (free tier available)
 
 ---
 
-## 📦 Output Sample (Telegram Format)
+## 📁 Project Structure
 
 ```
-📌 Delphi Developer
-🏢 Phizenix  
-🌍 Remote, Coos County  
-📅 2025-06-09  
-🔗 [Apply Here](https://www.adzuna.com/details/5241184553?utm_medium=api&utm_source=2fc5963c)
+.
+├── README.md          # This file
+├── jobs.json          # Main n8n workflow definition
 ```
 
 ---
 
-## 🧪 Learning Outcomes
+## 🚀 Setup Instructions
 
-This was my **first real-world project using n8n**, where I learned:
-- API handling inside visual workflows
-- JavaScript integration within n8n Code nodes
-- Real-time bot integration with Telegram
-- De-duplication logic via sets and filters
-- Connecting Google Sheets dynamically
+### 1. Import the Workflow
+
+- Open your n8n instance
+- Click on "Import Workflow" and upload `jobs.json`
+
+### 2. Configure Credentials
+
+- **Telegram Bot:**
+  - Create a bot via [@BotFather](https://t.me/BotFather)
+  - Add the bot token in n8n's credentials as `telegramApi`
+- **Google Sheets:**
+  - Authenticate with your Google account
+  - Set up a sheet with a `url` column
+- **Adzuna API:**
+  - Register at https://developer.adzuna.com/
+  - Replace the API credentials in the Adzuna request URL
+
+### 3. Telegram Chat ID
+
+- Use [@userinfobot](https://t.me/userinfobot) or check message logs to find your chat ID
 
 ---
 
-## 📂 Project Status
+## 🧠 Logic Flow (Simplified)
 
-✅ Completed and running live with scheduled Cron jobs.  
-🔄 Open to improvements and more integrations (e.g. LinkedIn, Indeed, etc).
+```text
+Cron Trigger
+   ↓
+HTTP Requests (Remotive, RemoteOK, Arbeitnow, Adzuna)
+   ↓
+Normalize Data
+   ↓
+Merge All Jobs
+   ↓
+Read URLs from Sheet
+   ↓
+Filter Duplicates
+   ↓
+Send to Telegram
+   ↓
+Append to Google Sheets
+```
 
 ---
 
-## 👨‍💻 Author
-
-**Mouad Rarhib**  
-[LinkedIn](https://www.linkedin.com/in/mouadrarhib) • [GitHub](https://github.com/MouadRarhib)
-
----
-
-## 📃 License
-
-This project is open source and available under the [MIT License](LICENSE).
+Enjoy automated job hunting! 🚀
