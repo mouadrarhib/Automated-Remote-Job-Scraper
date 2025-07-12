@@ -41,7 +41,7 @@ This project is an automated workflow built with [n8n](https://n8n.io) that:
 ```
 .
 ├── README.md          # This file
-├── jobs.json          # Main n8n workflow definition
+├── Automated Remote Job Scraper.json      # Main n8n workflow definition
 ```
 
 ---
