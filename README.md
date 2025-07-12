@@ -51,7 +51,7 @@ This project is an automated workflow built with [n8n](https://n8n.io) that:
 ### 1. Import the Workflow
 
 - Open your n8n instance
-- Click on "Import Workflow" and upload `jobs.json`
+- Click on "Import Workflow" and upload `Automated Remote Job Scraper.json`
 
 ### 2. Configure Credentials
 
