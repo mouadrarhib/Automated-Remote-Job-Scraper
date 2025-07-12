@@ -9,13 +9,13 @@
           ]
         }
       },
-      "id": "7cc84695-5ac1-417c-a1e7-a639786ab015",
+      "id": "762a27fe-e4d1-4301-b543-00a309799d6e",
       "name": "Cron Trigger",
       "type": "n8n-nodes-base.cron",
       "typeVersion": 1,
       "position": [
-        -300,
-        160
+        -1240,
+        340
       ]
     },
     {
@@ -23,26 +23,13 @@
         "url": "https://remotive.com/api/remote-jobs",
         "options": {}
       },
-      "id": "d828bb65-c9ec-4d21-9bde-dc75e192c39b",
+      "id": "3f9d5466-f517-4103-be4c-c4151568b84b",
       "name": "HTTP Request - Remotive",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        -20,
-        -140
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "// Remotive response structure: { jobs: [...] }\n\nconst keywords = ['developer', 'engineer', 'software', 'backend', 'frontend', 'fullstack', 'devops'];\nconst jobs = items[0]?.json?.jobs || [];\n\nconst filtered = jobs.filter(job => {\n  const title = (job.title || '').toLowerCase();\n  return keywords.some(keyword => title.includes(keyword));\n});\n\nreturn filtered.map(job => ({\n  json: {\n    title: job.title,\n    company: job.company_name,\n    location: job.candidate_required_location,\n    url: job.url,\n    date: job.publication_date\n  }\n}));\n"
-      },
-      "id": "36ae8c37-aebe-4dbf-ad24-44d0f99c1009",
-      "name": "Filter Jobs",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 1,
-      "position": [
-        200,
-        -40
+        -960,
+        40
       ]
     },
     {
@@ -50,26 +37,26 @@
         "url": "https://remoteok.com/api",
         "options": {}
       },
-      "id": "d3805f9c-e06b-4d53-8f21-eca001cf35c9",
+      "id": "8f19b146-b7f1-4c5f-8ac9-7ff9f9231cfe",
       "name": "HTTP Request - RemoteOK",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        -20,
-        60
+        -960,
+        240
       ]
     },
     {
       "parameters": {
         "jsCode": "// RemoteOK response is an array, first element is metadata (skip it)\n\nconst keywords = ['developer', 'engineer', 'software', 'backend', 'frontend', 'fullstack', 'devops'];\nconst jobs = items[0]?.json;\n\nif (!Array.isArray(jobs)) return [];\n\nconst filtered = jobs.slice(1).filter(job => {\n  const title = (job.position || '').toLowerCase();\n  return keywords.some(k => title.includes(k));\n});\n\nreturn filtered.map(job => ({\n  json: {\n    title: job.position,\n    company: job.company,\n    location: job.location || 'Remote',\n    url: job.url,\n    date: job.date\n  }\n}));\n"
       },
-      "id": "7940a040-0549-4787-a154-f05390c23b4b",
+      "id": "fa03b1df-3add-4d1b-ab28-c6be7d2583b9",
       "name": "Normalize - RemoteOK",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        200,
-        120
+        -740,
+        300
       ]
     },
     {
@@ -77,26 +64,26 @@
         "url": "https://www.arbeitnow.com/api/job-board-api",
         "options": {}
       },
-      "id": "9de80276-038c-48d9-bc54-f992d6dd56cc",
+      "id": "dc69acee-0ff6-4973-ae6b-6196242e4b62",
       "name": "HTTP Request - Arbeitnow",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        -20,
-        280
+        -960,
+        460
       ]
     },
     {
       "parameters": {
         "jsCode": "// Arbeitnow response: { data: [...] }\n\nconst keywords = ['developer', 'engineer', 'software', 'backend', 'frontend', 'fullstack', 'devops'];\nconst jobs = items[0]?.json?.data || [];\n\nconst filtered = jobs.filter(job => {\n  const title = (job.title || '').toLowerCase();\n  return keywords.some(k => title.includes(k));\n});\n\nreturn filtered.map(job => ({\n  json: {\n    title: job.title,\n    company: job.company,\n    location: job.location || 'Remote',\n    url: job.url,\n    date: job.created_at\n  }\n}));\n"
       },
-      "id": "6b01f5dd-7c38-4f3d-b61e-4b2d100a8af0",
+      "id": "86aca056-4965-4a10-9ad2-634fe9d01e8d",
       "name": "Normalize - Arbeitnow",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        200,
-        280
+        -740,
+        460
       ]
     },
     {
@@ -104,26 +91,26 @@
         "url": "https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=2fc5963c&app_key=0f97ec125058778196038ecae1ea6186&results_per_page=20&what=developer&where=remote&content-type=application/json",
         "options": {}
       },
-      "id": "a6474c1c-71b8-42f0-b6b7-f2eb9e3c96c9",
+      "id": "ca213825-f3eb-4a98-8fef-057fc96bec0f",
       "name": "HTTP Request - Adzuna",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        -20,
-        500
+        -960,
+        680
       ]
     },
     {
       "parameters": {
         "jsCode": "// Adzuna response: { results: [...] }\n\nconst keywords = ['developer', 'engineer', 'software', 'backend', 'frontend', 'fullstack', 'devops'];\nconst jobs = items[0]?.json?.results || [];\n\nconst filtered = jobs.filter(job => {\n  const title = (job.title || '').toLowerCase();\n  return keywords.some(k => title.includes(k));\n});\n\nreturn filtered.map(job => ({\n  json: {\n    title: job.title,\n    company: job.company?.display_name || 'Unknown',\n    location: job.location?.display_name || 'Remote',\n    url: job.redirect_url,\n    date: job.created\n  }\n}));\n"
       },
-      "id": "8d76dda5-6746-443d-804a-dcd25643ecf4",
+      "id": "b81e761d-949d-4061-afa0-34da4d018b53",
       "name": "Normalize - Adzuna",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        200,
-        420
+        -740,
+        600
       ]
     },
     {
@@ -132,13 +119,13 @@
         "sheetId": "1aBhYzpaulPAa4u9x_3BNNPmJhqi6FHEUU5RT2iiSbp4",
         "options": {}
       },
-      "id": "63bb35b2-3e85-463b-8d86-3a90b6b32dec",
+      "id": "f6c3d1a5-5273-4960-82d2-c20f6bd0688e",
       "name": "Read URLs from Sheet",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 1,
       "position": [
-        740,
-        180
+        -360,
+        500
       ],
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -149,28 +136,28 @@
     },
     {
       "parameters": {
-        "jsCode": "// Separate input into: jobs from API and saved URLs from Google Sheet\nconst jobs = [];\nconst existingUrls = new Set(); // use Set for better performance\n\nfor (const item of items) {\n  const data = item.json;\n\n  if (data.title && data.url) {\n    // Job object from API\n    jobs.push(data);\n  } else if (data.url) {\n    // Existing URL from Google Sheet\n    existingUrls.add(data.url.trim().toLowerCase());\n  }\n}\n\n// Filter out any job whose URL is already in the sheet\nconst filteredJobs = jobs.filter(job => {\n  const url = job.url?.trim().toLowerCase();\n  return !existingUrls.has(url);\n});\n\n// Return the new (non-duplicate) jobs\nreturn filteredJobs.map(job => ({ json: job }));\n"
+        "jsCode": "// Separate inputs: API jobs (with title + url) vs. sheet URLs (just url)\nconst jobs = [];\nconst existingUrls = new Set();\n\nfor (const item of items) {\n  const data = item.json;\n\n  if (data.title && data.url) {\n    // Job object from API\n    jobs.push(data);\n  } else if (data.url) {\n    // Existing URL from sheet\n    existingUrls.add(data.url.trim().toLowerCase());\n  }\n}\n\n// Remove jobs already in the sheet\nconst filteredJobs = jobs.filter(job => {\n  const url = job.url?.trim().toLowerCase();\n  return !existingUrls.has(url);\n});\n\nreturn filteredJobs.map(job => ({ json: job }));\n"
       },
-      "id": "3948014f-f057-4ca8-bd8d-99573c564493",
+      "id": "3d715a92-7b71-4242-aaf5-39ff0c2d2ad8",
       "name": "Filter Existing URLs",
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        980,
-        180
+        120,
+        340
       ]
     },
     {
       "parameters": {
         "unit": "seconds"
       },
-      "id": "1c792d6a-6464-46b1-a82c-2c2018fce705",
+      "id": "914d3e94-a90d-4ded-a792-9fda934e18af",
       "name": "Wait Between Sends",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1,
       "position": [
-        1480,
-        160
+        1220,
+        360
       ],
       "webhookId": "bd26fd69-1438-41f3-9a32-f08820538626"
     },
@@ -190,7 +177,7 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "url": "={{ $json.result.entities[0].url }}"
+            "url": "={{ $json.url }}"
           },
           "matchingColumns": [
             "url"
@@ -205,26 +192,6 @@
               "type": "string",
               "canBeUsedToMatch": true,
               "removed": false
-            },
-            {
-              "id": "ok",
-              "displayName": "ok",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "result",
-              "displayName": "result",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -235,10 +202,10 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.6,
       "position": [
-        1680,
+        980,
         160
       ],
-      "id": "c96f3b66-c932-40a7-a71e-61ca2b769d81",
+      "id": "b538a464-b78f-4e8e-8668-3f3dfd5eb7ab",
       "name": "Append row in sheet1",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -249,65 +216,17 @@
     },
     {
       "parameters": {
-        "numberInputs": 4
-      },
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        460,
-        180
-      ],
-      "id": "5e08bb7e-fb52-44eb-9e08-baded8afa296",
-      "name": "Merge"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3.2,
-      "position": [
-        840,
-        -180
-      ],
-      "id": "230d6fa6-146c-40d0-8c2a-9ba82419e9ee",
-      "name": "Merge1"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        1240,
-        -280
-      ],
-      "id": "87e05f11-4696-432f-a80f-5ad420094743",
-      "name": "Loop Over Items"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "name": "Replace Me",
-      "typeVersion": 1,
-      "position": [
-        1540,
-        -280
-      ],
-      "id": "be399786-f978-4f7c-a350-5cfe16574887"
-    },
-    {
-      "parameters": {
-        "chatId": "YOUR_TELEGRAM_CHAT_ID",
-        "text": "=📌 {{$json.title}} 🏢 {{$json.company}} 🌍 {{$json.location}} 📅 {{$json.date}} 🔗 [Apply Here]({{$json.url}})",
+        "chatId": "866288120",
+        "text": "=📌 {{$json.title || 'No title'}} 🏢 {{$json.company || 'Unknown'}} 🌍 {{$json.location || 'N/A'}} 📅 {{$json.date || 'N/A'}} 🔗 [Apply Here]({{$json.url || '#'}})",
         "additionalFields": {}
       },
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1300,
-        160
+        980,
+        360
       ],
-      "id": "fb006eb5-f03b-4820-b38a-4da73e572a2f",
+      "id": "ddc30fc6-06b6-4ef0-968f-c22e6e46b759",
       "name": "Send a text message",
       "webhookId": "a25c6a34-be7b-4e7b-9244-62c5aa89573d",
       "credentials": {
@@ -316,6 +235,69 @@
           "name": "Telegram account"
         }
       }
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -360,
+        200
+      ],
+      "id": "ad6fb076-ba4c-43e7-a607-d710baaac86e",
+      "name": "Merge All Jobs"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Remotive response structure: { jobs: [...] }\n\nconst keywords = ['developer', 'engineer', 'software', 'backend', 'frontend', 'fullstack', 'devops'];\nconst jobs = items[0]?.json?.jobs || [];\n\nconst filtered = jobs.filter(job => {\n  const title = (job.title || '').toLowerCase();\n  return keywords.some(keyword => title.includes(keyword));\n});\n\nreturn filtered.map(job => ({\n  json: {\n    title: job.title,\n    company: job.company_name,\n    location: job.candidate_required_location,\n    url: job.url,\n    date: job.publication_date\n  }\n}));\n"
+      },
+      "id": "6fad4c67-9d7d-4b18-8a3f-864f97b8b9aa",
+      "name": "Normalize - Remotive",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        140
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -80,
+        340
+      ],
+      "id": "9855cf3e-39b9-4d0d-85dd-822c0fd69296",
+      "name": "Filter Existing URLs2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        620,
+        340
+      ],
+      "id": "afb35df0-4946-4542-8bce-5fb7db6fec94",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.filter(item => {\n  const j = item.json;\n  return j.title && j.url;\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        340
+      ],
+      "id": "b574053d-08ce-4402-b60e-3cbc7e77c35c",
+      "name": "filter"
     }
   ],
   "pinData": {},
@@ -350,18 +332,7 @@
       "main": [
         [
           {
-            "node": "Filter Jobs",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Filter Jobs": {
-      "main": [
-        [
-          {
-            "node": "Merge",
+            "node": "Normalize - Remotive",
             "type": "main",
             "index": 0
           }
@@ -383,7 +354,7 @@
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Merge All Jobs",
             "type": "main",
             "index": 1
           }
@@ -416,7 +387,7 @@
       "main": [
         [
           {
-            "node": "Merge1",
+            "node": "Filter Existing URLs2",
             "type": "main",
             "index": 1
           }
@@ -427,7 +398,7 @@
       "main": [
         [
           {
-            "node": "Loop Over Items",
+            "node": "filter",
             "type": "main",
             "index": 0
           }
@@ -441,11 +412,6 @@
             "node": "Loop Over Items",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Append row in sheet1",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -454,7 +420,7 @@
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Merge All Jobs",
             "type": "main",
             "index": 2
           }
@@ -465,14 +431,25 @@
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Merge All Jobs",
             "type": "main",
             "index": 3
           }
         ]
       ]
     },
-    "Merge": {
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Wait Between Sends",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge All Jobs": {
       "main": [
         [
           {
@@ -481,14 +458,30 @@
             "index": 0
           },
           {
-            "node": "Merge1",
+            "node": "Filter Existing URLs2",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Merge1": {
+    "Normalize - Remotive": {
+      "main": [
+        [
+          {
+            "node": "Merge All Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        []
+      ]
+    },
+    "Filter Existing URLs2": {
       "main": [
         [
           {
@@ -504,18 +497,7 @@
         [],
         [
           {
-            "node": "Replace Me",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Replace Me": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
+            "node": "Append row in sheet1",
             "type": "main",
             "index": 0
           },
@@ -527,11 +509,11 @@
         ]
       ]
     },
-    "Send a text message": {
+    "filter": {
       "main": [
         [
           {
-            "node": "Wait Between Sends",
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -539,15 +521,14 @@
       ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "69c7c94a-8e64-4d6f-81fd-2d30d2b52d90",
+  "versionId": "0d6558a1-819a-4c5a-9ac7-699f3dbe2a9b",
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "200ad6319b5228b0fb8cfab6cbd327d6d6b5933a0eed9b63de0acb557b2ea98a"
   },
-  "id": "ppchRXL8biTJbjHo",
+  "id": "QY5mj5ymOTmNpvQQ",
   "tags": []
 }
